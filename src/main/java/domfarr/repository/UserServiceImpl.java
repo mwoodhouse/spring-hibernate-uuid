@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void save(User user) {
+    public void addUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 }

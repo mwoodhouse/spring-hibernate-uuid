@@ -18,6 +18,12 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.CascadeType.ALL;
+
 @Entity @Table(name = "USER")
 public class User
 {
@@ -35,7 +41,7 @@ public class User
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade= { ALL })
     private List<Pet> pets = new ArrayList<Pet>();
 
     public User()
@@ -47,7 +53,6 @@ public class User
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.pets = pets;
     }
 
     public String getId()

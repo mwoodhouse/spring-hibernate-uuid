@@ -10,5 +10,5 @@ public interface UserService {
 
     public List getUsers();
 
-    public void save(User user);
+    public void addUser(User user);
 }

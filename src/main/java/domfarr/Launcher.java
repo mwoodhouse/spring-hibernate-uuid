@@ -1,5 +1,12 @@
 package domfarr;
 
+import domfarr.model.Pet;
+import domfarr.model.PetType;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 public class Launcher
 {
     public static void main(String[] args)
@@ -14,7 +21,7 @@ public class Launcher
 //        System.out.println("User just created: " + originalUser);
 //        System.out.println("User's Pet just created: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));
 
-//        userService.save(originalUser);
+//        userService.addUser(originalUser);
 
 //        System.out.println("User now saved: " + originalUser);
 //        System.out.println("User's Pets now saved: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));

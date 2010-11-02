@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.util.StringUtils;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -59,7 +60,7 @@ public class UserITest {
 
     private void save(final User user, final String title)
     {
-        userService.save(user);
+        userService.addUser(user);
 
         printInfo(user, title);
     }
