@@ -9,13 +9,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class UserTest {
-    private static final List<Pet> PETS = asList(new Pet("Tom", PetType.CAT));
-
-    private static final User EXPECTED_UESR = new User("firstName", "lastName", "email@address.com", PETS);
+    private static final User EXPECTED_UESR = new User("firstName", "lastName", "email@address.com");
 
     @Test
     public void shouldNotHaveToTestEachField() {
-        User user = new User("firstName", "lastName", "email@address.com",PETS);
+        User user = new User("firstName", "lastName", "email@address.com");
 
         assertThat(user, equalTo(EXPECTED_UESR));
     }

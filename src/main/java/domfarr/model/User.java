@@ -35,14 +35,14 @@ public class User
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Pet> pets = new ArrayList<Pet>();
 
     public User()
     {
     }
 
-    public User(final String firstName, final String lastName, final String email, final List<Pet> pets)
+    public User(final String firstName, final String lastName, final String email)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,7 +95,7 @@ public class User
     @Override
     public String toString()
     {
-        final ReflectionToStringBuilder builder = new ReflectionToStringBuilder(this, ToStringStyle.SIMPLE_STYLE);
+        final ReflectionToStringBuilder builder = new ReflectionToStringBuilder(this);
         builder.setExcludeFieldNames(EXCLUDED_FIELDS);
         return builder.toString();
     }

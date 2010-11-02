@@ -29,16 +29,17 @@ public class Pet
     private PetType petType;
 
     @ManyToOne @JoinColumn(name = "USER_ID")
-    private User user;
+    private User owner;
 
     public Pet()
     {
     }
 
-    public Pet(final String name, final PetType petType)
+    public Pet(final String name, final PetType petType, final User owner)
     {
         this.name = name;
         this.petType = petType;
+        this.owner = owner;
     }
 
     public String getId()
@@ -56,9 +57,9 @@ public class Pet
         return petType;
     }
 
-    public User getUser()
+    public User getOwner()
     {
-        return user;
+        return owner;
     }
 
     @Override
@@ -76,6 +77,6 @@ public class Pet
     @Override
     public String toString()
     {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
+        return ToStringBuilder.reflectionToString(this);
     }
 }

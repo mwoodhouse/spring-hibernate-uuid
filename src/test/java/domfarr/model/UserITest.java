@@ -1,47 +1,80 @@
 package domfarr.model;
 
 import domfarr.repository.UserService;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/spring-context.xml"})
-@TransactionConfiguration(defaultRollback = false)
 public class UserITest {
-
-    private static final List<Pet> PETS = asList(new Pet("Tom", PetType.CAT));
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Test
     public void shouldBeAbleToUseEquals() {
-        User originalUser = new User("Dom", "Farr", "dominicfarr@gmail.com", PETS);
+        User originalUser = createUser();
 
-        System.out.println("User just created: " + originalUser);
-        System.out.println("User's Pet just created: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));
+        save(originalUser, "Save User");
 
-        userService.addUser(originalUser);
+        add(new Pet("Tom", PetType.CAT, originalUser), originalUser);
 
-        System.out.println("User now saved: " + originalUser);
-        System.out.println("User's Pets now saved: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));
+        save(originalUser, "Save With Pet");
 
-        User retrievedUser = userService.getUser(originalUser.getId());
+        sessionFactory.evict(User.class);
 
-        System.out.println("User now retrieved: " + retrievedUser);
-        System.out.println("User's Pets now retrieved: " + StringUtils.collectionToCommaDelimitedString(retrievedUser.getPets()));
+        User retrievedUser = retrieve(originalUser);
 
         assertThat(retrievedUser, equalTo(originalUser));
+    }
+
+    private User retrieve(final User originalUser)
+    {
+        User retrievedUser = userService.getUser(originalUser.getId());
+
+        printInfo(originalUser, "Retrieve");
+
+        return retrievedUser;
+    }
+
+    private User createUser()
+    {
+        User originalUser = new User("Dom", "Farr", "dominicfarr@gmail.com");
+
+        printInfo(originalUser, "Before add");
+
+        return originalUser;
+    }
+
+    private void save(final User user, final String title)
+    {
+        userService.save(user);
+
+        printInfo(user, title);
+    }
+
+    private void add(final Pet pet, final User user)
+    {
+        user.addPet(pet);
+
+        printInfo(user, "Add pet");
+    }
+
+    private void printInfo(final User user, String title)
+    {
+        System.out.println(title);
+        System.out.println("User: " + user);
+        System.out.println("User's Pets: " + StringUtils.collectionToCommaDelimitedString(user.getPets()) + "\n");
     }
 }
