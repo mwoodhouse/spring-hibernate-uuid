@@ -1,8 +1,8 @@
 package domfarr.repository;
 
 import domfarr.model.User;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,36 +12,36 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService
 {
-    private SessionFactory sessionFactory;
+    private final HibernateTemplate hibernateTemplate;
 
     @Autowired
-    public UserServiceImpl(SessionFactory sessionFactory)
+    public UserServiceImpl(final HibernateTemplate hibernateTemplate)
     {
-        this.sessionFactory = sessionFactory;
+        this.hibernateTemplate = hibernateTemplate;
     }
 
     @Override
     public User getUser(String id)
     {
-        return (User) sessionFactory.getCurrentSession().get(User.class, id);
+        return (User) hibernateTemplate.get(User.class, id);
     }
 
     @Override @SuppressWarnings("unchecked")
     public List<User> getUsers()
     {
-        return sessionFactory.getCurrentSession().createQuery("from User u").list();
+        return hibernateTemplate.find("from User u");
     }
 
     @Override
     public void saveOrUpdate(User user)
     {
-        if (sessionFactory.getCurrentSession().contains(user))
+        if (hibernateTemplate.contains(user))
         {
-            sessionFactory.getCurrentSession().merge(user);
+            hibernateTemplate.merge(user);
         }
         else
         {
-            sessionFactory.getCurrentSession().saveOrUpdate(user);
+            hibernateTemplate.saveOrUpdate(user);
         }
     }
 }

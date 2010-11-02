@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class App
 {
-    private UserService userService;
+    private final UserService userService;
 
-    public App() {}
+    public App() {
+        this.userService = null;
+    }
 
     public App(final UserService userService)
     {

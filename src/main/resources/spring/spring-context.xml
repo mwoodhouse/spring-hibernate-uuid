@@ -36,7 +36,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <!--repository initialization-->
+    <bean class="org.springframework.orm.hibernate3.HibernateTemplate" autowire="constructor" />
+
     <bean id="userService" class="domfarr.repository.UserServiceImpl" autowire="constructor"/>
 
     <bean id="app" class="domfarr.App" >
