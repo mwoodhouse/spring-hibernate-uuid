@@ -10,30 +10,38 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
     private SessionFactory sessionFactory;
 
     @Autowired
-    public UserServiceImpl(SessionFactory sessionFactory) {
+    public UserServiceImpl(SessionFactory sessionFactory)
+    {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    @Transactional
-    public User getUser(String id) {
+    public User getUser(String id)
+    {
         return (User) sessionFactory.getCurrentSession().get(User.class, id);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    @Transactional
-    public List getUsers() {
+    @Override @SuppressWarnings("unchecked")
+    public List<User> getUsers()
+    {
         return sessionFactory.getCurrentSession().createQuery("from User u").list();
     }
 
     @Override
-    @Transactional
-    public void addUser(User user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+    public void saveOrUpdate(User user)
+    {
+        if (sessionFactory.getCurrentSession().contains(user))
+        {
+            sessionFactory.getCurrentSession().merge(user);
+        }
+        else
+        {
+            sessionFactory.getCurrentSession().saveOrUpdate(user);
+        }
     }
 }

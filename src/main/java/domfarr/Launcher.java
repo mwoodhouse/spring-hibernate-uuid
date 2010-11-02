@@ -2,35 +2,28 @@ package domfarr;
 
 import domfarr.model.Pet;
 import domfarr.model.PetType;
-
-import java.util.List;
-
-import static java.util.Arrays.asList;
+import domfarr.model.User;
+import domfarr.repository.UserService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 public class Launcher
 {
+    private UserService userService;
+
     public static void main(String[] args)
     {
-//        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/spring-context.xml");
+        App app = (App) new ClassPathXmlApplicationContext("spring/spring-context.xml").getBean("app");
 
-//        UserService userService = (UserService) ctx.getBean("userService");
+        User user = new User("Dom", "Farr", "df@df.com");
 
+        app.saveOrUpdate(user);
 
-//       User originalUser = new User("Dom", "Farr", "dominicfarr@gmail.com", PETS);
+        user.addPet(new Pet("Tom", PetType.CAT, user));
 
-//        System.out.println("User just created: " + originalUser);
-//        System.out.println("User's Pet just created: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));
+        app.saveOrUpdate(user);
 
-//        userService.addUser(originalUser);
-
-//        System.out.println("User now saved: " + originalUser);
-//        System.out.println("User's Pets now saved: " + StringUtils.collectionToCommaDelimitedString(originalUser.getPets()));
-
-//        User retrievedUser = userService.getOwner("402882ba2c088f20012c088f21780001");
-
-//        System.out.println("User now retrieved: " + retrievedUser);
-//        System.out.println("User's Pets now retrieved: " + StringUtils.collectionToCommaDelimitedString(retrievedUser.getPets()));
-
-
+        app.printUserById(user.getId());
     }
+
 }

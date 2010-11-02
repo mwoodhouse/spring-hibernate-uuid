@@ -2,7 +2,7 @@ package domfarr.model;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,6 +19,8 @@ import javax.persistence.Table;
 @Entity @Table(name = "PET")
 public class Pet
 {
+    private static final String[] EXCLUDED_FIELDS = {"owner"};
+
     @Id @GeneratedValue(generator = "system-uuid") @GenericGenerator(name = "system-uuid", strategy = "uuid") @Column(name = "ID")
     private String id;
 
@@ -65,18 +67,20 @@ public class Pet
     @Override
     public int hashCode()
     {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
     }
 
     @Override
     public boolean equals(Object obj)
     {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        return EqualsBuilder.reflectionEquals(this, obj, EXCLUDED_FIELDS);
     }
 
     @Override
     public String toString()
     {
-        return ToStringBuilder.reflectionToString(this);
+        final ReflectionToStringBuilder builder = new ReflectionToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE);
+        builder.setExcludeFieldNames(EXCLUDED_FIELDS);
+        return builder.toString();
     }
 }

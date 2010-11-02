@@ -1,5 +1,6 @@
 package domfarr.model;
 
+import com.qmetric.hamcrest.matchers.CollectionMatcher;
 import domfarr.repository.UserService;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -8,15 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.util.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml"})
-public class UserITest {
-
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration(locations = {"classpath:spring/spring-context.xml"})
+@TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
+@Transactional
+public class UserITest
+{
     @Autowired
     private UserService userService;
 
@@ -24,58 +29,65 @@ public class UserITest {
     private SessionFactory sessionFactory;
 
     @Test
-    public void shouldBeAbleToUseEquals() {
-        User originalUser = createUser();
+    public void shouldPersistUser()
+    {
+        final User user = new User("Dom", "Farr", "dominicfarr@gmail.com");
+        userService.saveOrUpdate(user);
 
-        save(originalUser, "Save User");
-
-        add(new Pet("Tom", PetType.CAT, originalUser), originalUser);
-
-        save(originalUser, "Save With Pet");
-
-        sessionFactory.evict(User.class);
-
-        User retrievedUser = retrieve(originalUser);
-
-        assertThat(retrievedUser, equalTo(originalUser));
+        assertThat(user.getId(), notNullValue());
     }
 
-    private User retrieve(final User originalUser)
+    @Test
+    public void shouldPersistUserWithPet()
     {
-        User retrievedUser = userService.getUser(originalUser.getId());
+        final User user = new User("Dom", "Farr", "dominicfarr@gmail.com");
 
-        printInfo(originalUser, "Retrieve");
+        user.addPet(new Pet("Tom", PetType.CAT, user));
 
-        return retrievedUser;
+        userService.saveOrUpdate(user);
+
+        assertThat(user.getId(), notNullValue());
+
+        assertThat(user.getPets().get(0), notNullValue());
+
+        assertThat(user.getPets().get(0).getId(), notNullValue());
     }
 
-    private User createUser()
+    @Test
+    public void shouldPersistUserAndThenAddPet()
     {
-        User originalUser = new User("Dom", "Farr", "dominicfarr@gmail.com");
+        final User user = new User("Dom", "Farr", "dominicfarr@gmail.com");
 
-        printInfo(originalUser, "Before add");
+        userService.saveOrUpdate(user);
 
-        return originalUser;
+        sessionFactory.getCurrentSession().evict(user);
+
+        user.addPet(new Pet("Tom", PetType.CAT, user));
+
+        userService.saveOrUpdate(user);
+
+        assertThat(user.getId(), notNullValue());
+
+        assertThat(user.getPets().get(0), notNullValue());
+
+        assertThat(user.getPets().get(0).getId(), notNullValue());
     }
 
-    private void save(final User user, final String title)
+    @Test
+    public void shouldRetrieveUser()
     {
-        userService.addUser(user);
+        final User user = new User("Dom", "Farr", "dominicfarr@gmail.com");
 
-        printInfo(user, title);
-    }
+        user.addPet(new Pet("Tom", PetType.CAT, user));
 
-    private void add(final Pet pet, final User user)
-    {
-        user.addPet(pet);
+        userService.saveOrUpdate(user);
 
-        printInfo(user, "Add pet");
-    }
+        sessionFactory.getCurrentSession().flush();
+        sessionFactory.getCurrentSession().evict(user);
 
-    private void printInfo(final User user, String title)
-    {
-        System.out.println(title);
-        System.out.println("User: " + user);
-        System.out.println("User's Pets: " + StringUtils.collectionToCommaDelimitedString(user.getPets()) + "\n");
+        final User loadedUser = userService.getUser(user.getId());
+
+        assertThat(loadedUser, equalTo(user));
+        assertThat(loadedUser.getPets(), CollectionMatcher.containsOnly(user.getPets()));
     }
 }
