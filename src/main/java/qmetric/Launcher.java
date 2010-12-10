@@ -1,7 +1,7 @@
-package domfarr;
+package qmetric;
 
-import domfarr.model.Customer;
-import domfarr.repository.CustomerService;
+import qmetric.model.Customer;
+import qmetric.repository.CustomerService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Launcher

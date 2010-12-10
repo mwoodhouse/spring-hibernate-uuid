@@ -1,6 +1,6 @@
-package domfarr.repository;
+package qmetric.repository;
 
-import domfarr.model.Customer;
+import qmetric.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -35,7 +35,7 @@ public class CustomerService
     @SuppressWarnings("unchecked")
     public List<Customer> getAll()
     {
-        return hibernateTemplate.find("from Customer u");
+        return hibernateTemplate.find("from Customer customer");
     }
 
     public void save(Customer customer)
