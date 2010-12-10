@@ -9,7 +9,10 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <tx:annotation-driven transaction-manager="txManager" />
+    <context:annotation-config/>
+    <context:component-scan base-package="domfarr"/>
+    
+    <tx:annotation-driven transaction-manager="txManager"/>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -36,11 +39,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="org.springframework.orm.hibernate3.HibernateTemplate" autowire="constructor" />
+    <bean class="org.springframework.orm.hibernate3.HibernateTemplate" autowire="constructor"/>
 
-    <bean id="userService" class="domfarr.repository.UserServiceImpl" autowire="constructor"/>
-
-    <bean id="app" class="domfarr.App" >
-        <constructor-arg ref="userService" />    
-    </bean>
 </beans>

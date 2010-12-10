@@ -25,7 +25,7 @@ import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity @Table(name = "USER")
-public class User
+public class Customer
 {
     private static final String[] EXCLUDED_FIELDS = {"pets"};
 
@@ -41,14 +41,11 @@ public class User
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade= { ALL })
-    private List<Pet> pets = new ArrayList<Pet>();
-
-    public User()
+    public Customer()
     {
     }
 
-    public User(final String firstName, final String lastName, final String email)
+    public Customer(final String firstName, final String lastName, final String email)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -73,16 +70,6 @@ public class User
     public String getEmail()
     {
         return email;
-    }
-
-    public List<Pet> getPets()
-    {
-        return pets;
-    }
-
-    public void addPet(Pet pet)
-    {
-        pets.add(pet);
     }
 
     @Override

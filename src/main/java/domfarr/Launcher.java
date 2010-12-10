@@ -1,29 +1,21 @@
 package domfarr;
 
-import domfarr.model.Pet;
-import domfarr.model.PetType;
-import domfarr.model.User;
-import domfarr.repository.UserService;
+import domfarr.model.Customer;
+import domfarr.repository.CustomerService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
 public class Launcher
 {
-    private UserService userService;
+    private CustomerService userService;
 
-    public static void main(String[] args)
+    public static void main(String[] arguments)
     {
-        App app = (App) new ClassPathXmlApplicationContext("spring/spring-context.xml").getBean("app");
+        CustomerService customerService = (CustomerService) new ClassPathXmlApplicationContext("spring/spring-context.xml").getBean("customerService");
 
-        User user = new User("Dom", "Farr", "df@df.com");
+        Customer customer = new Customer("Dom", "Farr", "dfarr@qmetri.co.uk");
 
-        app.saveOrUpdate(user);
+        customerService.save(customer);
 
-        user.addPet(new Pet("Tom", PetType.CAT, user));
-
-        app.saveOrUpdate(user);
-
-        app.printUserById(user.getId());
+        System.out.println(customer);
     }
-
 }
