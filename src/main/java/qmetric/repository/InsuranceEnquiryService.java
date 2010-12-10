@@ -50,4 +50,9 @@ public class InsuranceEnquiryService
             hibernateTemplate.saveOrUpdate(insuranceEnquiry);
         }
     }
+
+    public void delete(final InsuranceEnquiry enquiry)
+    {
+        hibernateTemplate.delete(enquiry);
+    }
 }

@@ -28,9 +28,6 @@ public class IntegrationTest
     @Autowired
     private InsuranceEnquiryService insuranceEnquiryService;
 
-    @Autowired
-    private InsuranceQuoteService insuranceQuoteService;
-
     @Test
     public void shouldPersistInsuranceEnquiry()
     {
@@ -64,7 +61,7 @@ public class IntegrationTest
         System.out.println(customer);
 
         customer.deleteInsuranceEnquiry(enquiry2);
-
+        insuranceEnquiryService.delete(enquiry2);
         customerService.save(customer);
 
         System.out.println(customer);
@@ -81,7 +78,7 @@ public class IntegrationTest
     {
         Set<ClassDetail> classDetails = new HashSet<ClassDetail>();
 
-        ClassDetail classDetailA = new ClassDetail("desc A " + ref, 100D);
+        ClassDetail classDetailA = new ClassDetail("desc A" + ref, 100D);
         classDetails.add(classDetailA);
         ClassDetail classDetailB = new ClassDetail("desc B" + ref, 120D);
         classDetails.add(classDetailB);

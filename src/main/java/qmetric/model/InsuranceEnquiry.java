@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +23,11 @@ import java.util.Set;
 @Entity @Table(name = "INSURANCE_ENQUIRY")
 public class InsuranceEnquiry extends BaseEntity implements Serializable
 {
+
+    
+
     @OneToMany(cascade = CascadeType.ALL) @JoinColumn(name = "INSURANCE_ENQUIRY_ID", referencedColumnName = "ID")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<InsuranceQuote> insuranceQuotes = new HashSet<InsuranceQuote>();
 
     @Column

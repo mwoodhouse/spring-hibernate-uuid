@@ -5,6 +5,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,6 +34,7 @@ public class Customer extends BaseEntity implements Serializable
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL)  @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<InsuranceEnquiry> insuranceEnquiries = new HashSet<InsuranceEnquiry>();
 
     Customer()
