@@ -4,7 +4,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,7 +29,7 @@ public class Customer extends BaseEntity implements Serializable {
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
     private Set<InsuranceEnquiry> insuranceEnquiries = new HashSet<InsuranceEnquiry>();
 
-    Customer() {
+    protected Customer() {
     }
 
     public Customer(final String firstName, final String lastName, final String email) {
@@ -40,10 +39,10 @@ public class Customer extends BaseEntity implements Serializable {
     }
 
     @PrePersist
-    public void prePersist()
-    {
+    public void prePersist() {
         super.prePersist();
         System.out.println("Pre Persist in Customer");
+        // this is the place to generate a custom CID
     }
 
     public String getFirstName() {
