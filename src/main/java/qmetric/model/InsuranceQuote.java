@@ -24,7 +24,6 @@ import java.util.Set;
 public class InsuranceQuote extends BaseEntity implements Serializable
 {
     @OneToMany(cascade = CascadeType.ALL) @JoinColumn(name = "INSURANCE_QUOTE_ID", referencedColumnName = "ID")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<ClassDetail> classDetails = new HashSet<ClassDetail>();
 
     InsuranceQuote()

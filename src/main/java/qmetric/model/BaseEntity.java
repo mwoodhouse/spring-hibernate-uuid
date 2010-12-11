@@ -1,17 +1,13 @@
 package qmetric.model;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -24,10 +20,22 @@ public class BaseEntity implements Serializable
     private String id;
 
     @Column(nullable = false) @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime created = new DateTime();
+    private DateTime created;
 
     @Column(nullable = false, name = "LAST_MODIFIED") @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime lastModified = new DateTime();
+    private DateTime lastModified;
+
+    @PrePersist
+    public void prePersist()
+    {
+        System.out.println("Pre Persist Method in Baes Entity");
+
+        if(created == null) {
+            created = new DateTime();
+        }
+
+        lastModified = new DateTime();
+    }
 
     public String getId()
     {

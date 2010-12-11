@@ -5,28 +5,29 @@ import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import qmetric.model.Customer;
+import qmetric.model.InsuranceEnquiry;
 
 import javax.persistence.EntityManagerFactory;
 
 @Repository
 @Transactional
-public class CustomerService {
+public class EnquiryService {
     private JpaTemplate jpaTemplate;
 
     /**
-     * This is for Cglib2AopProxy    cleverness 
+     * This is for Cglib2AopProxy    cleverness
      */
-    CustomerService() {
+    EnquiryService() {
     }
 
     @Autowired
-    public CustomerService(EntityManagerFactory emf)
+    public EnquiryService(EntityManagerFactory emf)
     {
         this.jpaTemplate = new JpaTemplate(emf);
     }
 
-    public void save(Customer customer)
+    public void save(InsuranceEnquiry enquiry)
     {
-        jpaTemplate.persist(customer);
+        jpaTemplate.persist(enquiry);
     }
 }

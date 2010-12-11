@@ -27,7 +27,6 @@ public class InsuranceEnquiry extends BaseEntity implements Serializable
     
 
     @OneToMany(cascade = CascadeType.ALL) @JoinColumn(name = "INSURANCE_ENQUIRY_ID", referencedColumnName = "ID")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<InsuranceQuote> insuranceQuotes = new HashSet<InsuranceQuote>();
 
     @Column

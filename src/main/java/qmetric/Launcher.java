@@ -11,11 +11,5 @@ public class Launcher
     public static void main(String[] arguments)
     {
         CustomerService customerService = (CustomerService) new ClassPathXmlApplicationContext("spring/spring-context.xml").getBean("customerService");
-
-        Customer customer = new Customer("Dom", "Farr", "dfarr@qmetri.co.uk");
-
-        customerService.save(customer);
-
-        System.out.println(customer);
     }
 }
