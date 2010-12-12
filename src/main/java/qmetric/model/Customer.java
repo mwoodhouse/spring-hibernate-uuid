@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer extends BaseEntity implements Serializable {
+
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -25,6 +26,9 @@ public class Customer extends BaseEntity implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "PASSWORD")
+    private String password;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
     private Set<InsuranceEnquiry> insuranceEnquiries = new HashSet<InsuranceEnquiry>();
@@ -32,10 +36,11 @@ public class Customer extends BaseEntity implements Serializable {
     protected Customer() {
     }
 
-    public Customer(final String firstName, final String lastName, final String email) {
+    public Customer(final String firstName, final String lastName, final String email, final String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     @PrePersist
@@ -55,6 +60,11 @@ public class Customer extends BaseEntity implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword()
+    {
+        return password;
     }
 
     public Set<InsuranceEnquiry> getInsuranceEnquiries() {

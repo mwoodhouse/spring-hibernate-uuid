@@ -39,12 +39,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <bean id="jpaAdapter"
           class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-
-        <property name="generateDdl" value="true" />
-        <property name="showSql" value="true" />
-        <property name="database" value="ORACLE" />
-
+        <property name="generateDdl" value="true"/>
+        <property name="showSql" value="true"/>
+        <property name="database" value="ORACLE"/>
     </bean>
-
 
 </beans>
