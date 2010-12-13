@@ -1,8 +1,7 @@
 package qmetric;
 
-import qmetric.model.Customer;
-import qmetric.repository.CustomerService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import qmetric.repository.CustomerService;
 
 public class Launcher
 {

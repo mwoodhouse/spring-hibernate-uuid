@@ -7,7 +7,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+
 import java.io.Serializable;
 
 /**
@@ -24,6 +29,9 @@ public class BaseEntity implements Serializable
 
     @Column(nullable = false, name = "LAST_MODIFIED") @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     private DateTime lastModified;
+
+    protected BaseEntity()
+    {}
 
     @PrePersist
     public void prePersist()

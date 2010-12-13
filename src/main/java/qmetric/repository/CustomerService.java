@@ -29,4 +29,8 @@ public class CustomerService {
     {
         jpaTemplate.persist(customer);
     }
+    public void remove(final Customer customer)
+    {
+        jpaTemplate.remove(customer);
+    }
 }

@@ -42,7 +42,7 @@ public class IntegrationTest {
         customerService.save(customer);
 
         System.out.println(customer);
+
+        customerService.remove(customer);
     }
-
-
 }

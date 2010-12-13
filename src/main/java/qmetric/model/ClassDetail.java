@@ -21,7 +21,7 @@ public class ClassDetail extends BaseEntity implements Serializable
 
     private double cost;
 
-    ClassDetail()
+    protected ClassDetail()
     {
     }
 
