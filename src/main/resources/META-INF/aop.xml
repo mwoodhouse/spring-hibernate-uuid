@@ -1,0 +1,12 @@
+<!DOCTYPE aspectj PUBLIC
+    "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <weaver options="-verbose -Xset:weaveJavaxPackages=true">
+            <include within="qmetric.domain..*" />
+            <exclude within="*..*CGLIB*" />
+            <exclude within="*..*javassist*" />
+    </weaver>
+    <aspects>
+            <aspect name="org.springframework.beans.factory.aspectj.AbstractInterfaceDrivenDependencyInjectionAspect" />
+    </aspects>
+</aspectj>

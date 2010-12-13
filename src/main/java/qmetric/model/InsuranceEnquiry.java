@@ -1,7 +1,6 @@
 package qmetric.model;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.Cascade;
@@ -32,7 +31,7 @@ public class InsuranceEnquiry extends BaseEntity implements Serializable
     @Column
     private String description;
 
-    InsuranceEnquiry()
+    protected InsuranceEnquiry()
     {
     }
 
