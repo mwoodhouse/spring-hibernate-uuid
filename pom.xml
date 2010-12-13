@@ -25,6 +25,16 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkMode>always</forkMode>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/springframework/spring-instrument/3.0.3.RELEASE/spring-instrument-3.0.3.RELEASE.jar
+                    </argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
