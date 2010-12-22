@@ -15,12 +15,35 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!-- MySql -->
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+    </bean>
+    -->
+
+    <!-- Hypersonic in memory data source - only available in test -->
+
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="url" value="jdbc:hsqldb:mem:mymemdb"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+
+    <!-- Oracle data source - fill in url, user name and password -->
+    <!--
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@ec2-79-125-116-110.eu-west-1.compute.amazonaws.com:1521:QMG"/>
-        <property name="username" value="QMG_DFARR"/>
-        <property name="password" value="dfarr"/>
+        <property name="url" value="jdbc:oracle:"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
     </bean>
+    -->
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
@@ -42,7 +65,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
         <property name="generateDdl" value="true"/>
         <property name="showSql" value="true"/>
-        <property name="database" value="ORACLE"/>
+        <property name="database" value="HSQL"/>
 
     </bean>
 

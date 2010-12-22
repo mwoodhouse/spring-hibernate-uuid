@@ -25,7 +25,7 @@ public class IntegrationTest {
     @Test
     public void create()
     {
-        Customer customer = new Customer("dom", "farr", "dominicfarr@gmail.com", "password");
+        Customer customer = new Customer("dom", "farr", "dominicfarr@gmail.com");
 
         customerService.save(customer);
 
